@@ -21,7 +21,7 @@ const rl = readline.createInterface({input: stdin, output: stdout});
 const commands = ['npm init -y'];
 
 // Functions
-function runcommands(callback) {
+function runcommands(commands, callback) {
     function executecommands(index) {
         if (index >= commands.length) {
             return callback();
@@ -61,8 +61,8 @@ function createDirectories(dirs, callback) {
 function genfilenode() {
     // Create JavaScript files
     const nodefiles = [
-        { path: path.join(process.cwd(), "js", "index.js"), content: "// main js file" },
-        { path: path.join(process.cwd(), "js", "server.js"), content: "// server js file\n" + codenode },
+        { path: path.join(process.cwd(), "js", "index.js"), content: "// main js file"+ codenode  },
+        { path: path.join(process.cwd(), "js", "server.js"), content: "// server js file\n"},
         { path: path.join(process.cwd(), "js", "test.js"), content: "// test js file" },
     ];
     nodefiles.forEach(file => {
@@ -78,8 +78,13 @@ function genfilenode() {
 
 
 // Execute functions
-createDirectories([path.join(process.cwd(), "js"), path.join(process.cwd(), "styles")], () => {
-    runcommands(() => {
+createDirectories([path.join(process.cwd(), "js")], () => {
+    const jsDir = "js"
+    process.chdir(jsDir)
+    runcommands(['npm init -y'], () => {
+        process.chdir("..");  // Go back to the root directory after npm init
         genfilenode();
+       
     });
 });
+
