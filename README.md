@@ -1,2 +1,2 @@
-# filegen-node-dev-
-this the file gen but for node develpment it makes a simple index server and test .js
+# filegen
+ it is a file gen that makes the desired files to make the files needed to start your project easily without having to take too much time

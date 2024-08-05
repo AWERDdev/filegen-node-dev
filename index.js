@@ -1,0 +1,209 @@
+#!/usr/bin/env node
+
+// Variables
+const fs = require("fs");
+const path = require("path");
+const { exec } = require('child_process');
+
+// File content
+
+// Node.js file content
+const codenode = `
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
+const { stdin, stdout } = require("process");
+const rl = readline.createInterface({input: stdin, output: stdout});
+`;
+
+// Website content
+const codeweb = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/body.css">
+    <link rel="stylesheet" href="styles/title.css">
+    <link rel="stylesheet" href="styles/end.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <title><!--change me when needed-->app</title>
+</head>
+<body>
+    <div class="title-start"></div>
+    <div class="main-content"></div>
+    <div class="end-bottom"></div>
+    <script src="js/index.js"></script>
+</body>
+</html>
+`;
+
+// CSS content
+const cssbody = `
+/* Root for font sizes */
+:root {
+    --fs-600: 2rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+}
+
+/* Body */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}`;
+
+const csstitle = `
+/* Root for font sizes */
+:root {
+    --fs-600: 2rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+}
+
+/* Title top */
+.title {
+    width: 100%;
+    min-height: 10vh;
+    margin: 0;
+    padding: 0;
+}`;
+
+const cssmain = `
+/* Root for font sizes */
+:root {
+    --fs-600: 2rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+}`;
+
+const cssend = `
+/* Root for font sizes */
+:root {
+    --fs-600: 2rem;
+    --fs-500: 1.25rem;
+    --fs-400: 1rem;
+}`;
+
+const cssres = `
+@media(max-width: 600px) {
+    /* Root for font sizes */
+    :root {
+        --fs-600: 1rem;
+        --fs-500: 1rem;
+        --fs-400: 0.56rem;
+    }
+
+    /* Body */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+@media(min-width: 601px) {
+    /* Body */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+@media(min-width: 768px) {
+    /* Body */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+@media(min-width: 992px) {
+    /* Body */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+@media(min-width: 1200px) {
+    /* Body */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}`;
+
+// Command line codes
+const commands = ['npm init -y'];
+
+// Functions
+function runcommands(callback) {
+    function executecommands(index) {
+        if (index >= commands.length) {
+            return callback();
+        }
+        exec(commands[index], (err, stdout, stderr) => {
+            if (err) {
+                console.error("Failed running command: " + commands[index] + " Error: " + err);
+                return;
+            }
+            console.log(`Output: ${stdout}`);
+            executecommands(index + 1);
+        });
+    }
+    executecommands(0);
+}
+
+function createDirectories(dirs, callback) {
+    let index = 0;
+
+    function createDir() {
+        if (index >= dirs.length) {
+            return callback();
+        }
+        fs.mkdir(dirs[index], { recursive: true }, (err) => {
+            if (err) {
+                console.error("Failed creating directory: " + dirs[index] + " Error: " + err);
+                return;
+            }
+            console.log("Directory created: " + dirs[index]);
+            index++;
+            createDir();
+        });
+    }
+    createDir();
+}
+
+function genfilenode() {
+    // Create JavaScript files
+    const nodefiles = [
+        { path: path.join(process.cwd(), "js", "index.js"), content: "// main js file" },
+        { path: path.join(process.cwd(), "js", "server.js"), content: "// server js file\n" + codenode },
+        { path: path.join(process.cwd(), "js", "test.js"), content: "// test js file" },
+    ];
+    nodefiles.forEach(file => {
+        fs.writeFile(file.path, file.content, (err) => {
+            if (err) {
+                console.error("Failed creating the node/js files: " + err);
+                return;
+            }
+            console.log("Node files created successfully");
+        });
+    });
+}
+
+
+// Execute functions
+createDirectories([path.join(process.cwd(), "js"), path.join(process.cwd(), "styles")], () => {
+    runcommands(() => {
+        genfilenode();
+    });
+});

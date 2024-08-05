@@ -1,0 +1,20 @@
+{
+  "name": "filegennode",
+  "version": "1.0.0",
+  "description": "it is a file gen that makes the desired files to make the files needed to start your project easily without having to take too much time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "bin": {
+    "filegennode": "index.js"
+  },
+  "keywords": [],
+  "author": "AwerdDev",
+  "license": "ISC",
+  "dependencies": {
+    "comander": "^0.0.1-security"
+  },
+  "devDependencies": {}
+}
