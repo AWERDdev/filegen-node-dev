@@ -22,6 +22,7 @@ const commands = ['npm init -y'];
 
 // Functions
 function runcommands(commands, callback) {
+    commands = [`npm init -y`,`npm i date-fns --D` , `npm i uuid --D`]
     function executecommands(index) {
         if (index >= commands.length) {
             return callback();
