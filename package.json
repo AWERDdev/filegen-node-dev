@@ -10,7 +10,7 @@
   "bin": {
     "filegen-node-dev": "index.js"
   },
-  "keywords": [],
+  "keywords": ["filegen"],
   "author": "AwerdDev",
   "license": "ISC",
   "dependencies": {
