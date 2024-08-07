@@ -22,7 +22,7 @@ const commands = ['npm init -y'];
 
 // Functions
 function runcommands(commands, callback) {
-    commands = [`npm init -y`,`npm i date-fns --D` , `npm i uuid --D`]
+    commands = [`npm init -y`,`npm i date-fns -D` , `npm i uuid -D`,`npm i bcrypt -D`]
     function executecommands(index) {
         if (index >= commands.length) {
             return callback();
@@ -62,9 +62,9 @@ function createDirectories(dirs, callback) {
 function genfilenode() {
     // Create JavaScript files
     const nodefiles = [
-        { path: path.join(process.cwd(), "js", "index.js"), content: "// main js file"+ codenode  },
-        { path: path.join(process.cwd(), "js", "server.js"), content: "// server js file\n"},
-        { path: path.join(process.cwd(), "js", "test.js"), content: "// test js file" },
+        { path:path.join(process.cwd(),"js","index.js"), content: "// main js file"+ codenode  },
+        { path:path.join(process.cwd(),"js","server.js"), content: "// server js file\n"},
+        { path:path.join(process.cwd(),"js","testjs"), content: "// test js file" },
     ];
     nodefiles.forEach(file => {
         fs.writeFile(file.path, file.content, (err) => {
