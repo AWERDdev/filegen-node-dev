@@ -22,7 +22,7 @@ const commands = ['npm init -y'];
 
 // Functions
 function runcommands(commands, callback) {
-    commands = [`npm init -y`,`npm i bcrypt -D`]
+    commands = [`npm init -y`]
     function executecommands(index) {
         if (index >= commands.length) {
             return callback();
@@ -61,10 +61,17 @@ function createDirectories(dirs, callback) {
 
 function genfilenode() {
     // Create JavaScript files
-    const nodefiles = [
-        { path:path.join(process.cwd(),"js","index.js"), content: "// main js file"+ codenode  },
+
+    //add this when you want to but the files into a folder 
+    /*
+    { path:path.join(process.cwd(),"js","index.js"), content: "// main js file"+ codenode  },
         { path:path.join(process.cwd(),"js","server.js"), content: "// server js file\n"},
         { path:path.join(process.cwd(),"js","test.js"), content: "// test js file" },
+    */
+    const nodefiles = [
+        { path:"index.js", content: "// main js file"+ codenode  },
+        { path:"server.js", content: "// server js file\n"},
+        { path:"test.js", content: "// test js file" },
     ];
     nodefiles.forEach(file => {
         fs.writeFile(file.path, file.content, (err) => {
@@ -79,13 +86,13 @@ function genfilenode() {
 
 
 // Execute functions
-createDirectories([path.join(process.cwd(), "js")], () => {
-    const jsDir = "js"
-    process.chdir(jsDir)
+//createDirectories([path.join(process.cwd(), "js")], () => {
+  //  const jsDir = "js"
+    //process.chdir(jsDir)
     runcommands(['npm init -y'], () => {
-        process.chdir("..");  // Go back to the root directory after npm init
+      //  process.chdir("..");  // Go back to the root directory after npm init
         genfilenode();
        
     });
-});
+//});
 
