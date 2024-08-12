@@ -14,6 +14,10 @@ const path = require("path");
 const readline = require("readline");
 const { stdin, stdout } = require("process");
 const rl = readline.createInterface({input: stdin, output: stdout});
+const {v4:uuid} = require("uuid");
+const {format} = require("date-fns");
+const bcrypt = require("bcrypt");
+
 `;
 
 
@@ -39,6 +43,9 @@ function runcommands(commands, callback) {
     executecommands(0);
 }
 
+
+//to create directories
+/*
 function createDirectories(dirs, callback) {
     let index = 0;
 
@@ -58,6 +65,8 @@ function createDirectories(dirs, callback) {
     }
     createDir();
 }
+*/
+
 
 function genfilenode() {
     // Create JavaScript files
@@ -68,10 +77,12 @@ function genfilenode() {
         { path:path.join(process.cwd(),"js","server.js"), content: "// server js file\n"},
         { path:path.join(process.cwd(),"js","test.js"), content: "// test js file" },
     */
+
+
     const nodefiles = [
         { path:"index.js", content: "// main js file"+ codenode  },
-        { path:"server.js", content: "// server js file\n"},
-        { path:"test.js", content: "// test js file" },
+        { path:"server.js", content: "// server js file\t"+codenode},
+        { path:"test.js", content: "// test js file"+codenode},
     ];
     nodefiles.forEach(file => {
         fs.writeFile(file.path, file.content, (err) => {
@@ -89,10 +100,9 @@ function genfilenode() {
 //createDirectories([path.join(process.cwd(), "js")], () => {
   //  const jsDir = "js"
     //process.chdir(jsDir)
-    runcommands(['npm init -y'], () => {
+
       //  process.chdir("..");  // Go back to the root directory after npm init
-        genfilenode();
-       
-    });
+        genfilenode()
+            runcommands()
 //});
 
